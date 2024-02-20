@@ -73,12 +73,21 @@
 
     if ($result_text) {
         $sql ="UPDATE `zdobytepunkty` SET `punkty` = `punkty` + 1;";
+        mysqli_query($conn, $sql);
+        $sql =" UPDATE `klikniecia` SET `ilosc`=`ilosc`+1 WHERE 1;";
 
         mysqli_query($conn, $sql);
     } else{
-        echo "Niepoprawny odpowiedz! Spróbuj jeszcze raz.";
+        $sql =" UPDATE `klikniecia` SET `ilosc`=`ilosc`+1 WHERE 1;";
+
+        mysqli_query($conn, $sql);
     }
+
+    
 }
+if($_POST['klik']==$_POST['maxklik']){
+        echo "nieee";
+    }
 
 $sql = "SELECT * FROM pytania;";
 $result = mysqli_query($conn, $sql);
@@ -103,6 +112,23 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 
+$sql = "SELECT * FROM klikniecia";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+   
+    while ($row = mysqli_fetch_assoc($result)) {
+       
+        ?>
+        <div class='card'>
+            <form action='' method='post'>
+                <input type='hidden' name='klik' value='<?php echo $row["ilosc"]; ?>'>
+                <input type='hidden' name='maxklik' value='<?php echo $row["max"]; ?>'>
+            </form>
+        </div>
+        <?php
+    }
+}
 mysqli_close($conn);
 
 ?>
