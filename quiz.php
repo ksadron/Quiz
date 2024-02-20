@@ -70,7 +70,7 @@
     $selected_option = $_POST['selected_option'];
     $correct_answer = $_POST['correct_answer'];
     $result_text = ($selected_option == $correct_answer) ? true : false;
-
+     
     if ($result_text) {
         $sql ="UPDATE `zdobytepunkty` SET `punkty` = `punkty` + 1;";
         mysqli_query($conn, $sql);
@@ -83,11 +83,7 @@
         mysqli_query($conn, $sql);
     }
 
-    
 }
-if($_POST['klik']==$_POST['maxklik']){
-        echo "nieee";
-    }
 
 $sql = "SELECT * FROM pytania;";
 $result = mysqli_query($conn, $sql);
@@ -115,21 +111,20 @@ if (mysqli_num_rows($result) > 0) {
 $sql = "SELECT * FROM klikniecia";
 $result = mysqli_query($conn, $sql);
 
+
 if (mysqli_num_rows($result) > 0) {
-   
     while ($row = mysqli_fetch_assoc($result)) {
-       
-        ?>
-        <div class='card'>
-            <form action='' method='post'>
-                <input type='hidden' name='klik' value='<?php echo $row["ilosc"]; ?>'>
-                <input type='hidden' name='maxklik' value='<?php echo $row["max"]; ?>'>
-            </form>
-        </div>
-        <?php
+        $ilosc = $row["ilosc"];
+        $max = $row["max"];
     }
 }
+$result = ($ilosc >=$max ) ? true : false;
+if($result){
+  header("location wynik.php");
+}
+
 mysqli_close($conn);
+
 
 ?>
 <form action="wynik.php" method="post">

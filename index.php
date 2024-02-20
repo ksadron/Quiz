@@ -53,7 +53,7 @@
 $sql = "UPDATE `zdobytepunkty` SET `punkty`='0' WHERE 1";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 $result = mysqli_query($conn, $sql);
-$sql =" UPDATE `klikniecia` SET `ilosc`='0' WHERE 1;";
+$sql =" UPDATE `klikniecia` SET `ilosc`='1' WHERE 1;";
 
 mysqli_query($conn, $sql);
 mysqli_close($conn);
