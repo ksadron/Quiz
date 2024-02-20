@@ -61,7 +61,12 @@
                 }
             }, 1000);
         }
-        
+       // var myVar = <
+      // ?php echo json_encode($aaa) ?
+       //>;
+//if(myVar){
+  ///  console.log("nie");
+//}
     </script>
 <?php
    include 'lacz.php';
@@ -120,12 +125,10 @@ if (mysqli_num_rows($result) > 0) {
 }
 $result = ($ilosc >=$max ) ? true : false;
 if($result){
-  header("location wynik.php");
+  $aaa = true;
 }
 
 mysqli_close($conn);
-
-
 ?>
 <form action="wynik.php" method="post">
     <button type="submit">pokaż wyniki</button>
