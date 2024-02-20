@@ -61,7 +61,12 @@
                 }
             }, 1000);
         }
-        
+       // var myVar = <
+      // ?php echo json_encode($aaa) ?
+       //>;
+//if(myVar){
+  ///  console.log("nie");
+//}
     </script>
 <?php
    include 'lacz.php';
@@ -70,14 +75,19 @@
     $selected_option = $_POST['selected_option'];
     $correct_answer = $_POST['correct_answer'];
     $result_text = ($selected_option == $correct_answer) ? true : false;
-
+     
     if ($result_text) {
         $sql ="UPDATE `zdobytepunkty` SET `punkty` = `punkty` + 1;";
+        mysqli_query($conn, $sql);
+        $sql =" UPDATE `klikniecia` SET `ilosc`=`ilosc`+1 WHERE 1;";
 
         mysqli_query($conn, $sql);
     } else{
-        echo "Niepoprawny odpowiedz! Spróbuj jeszcze raz.";
+        $sql =" UPDATE `klikniecia` SET `ilosc`=`ilosc`+1 WHERE 1;";
+
+        mysqli_query($conn, $sql);
     }
+
 }
 
 $sql = "SELECT * FROM pytania;";
@@ -103,8 +113,22 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 
-mysqli_close($conn);
+$sql = "SELECT * FROM klikniecia";
+$result = mysqli_query($conn, $sql);
 
+
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $ilosc = $row["ilosc"];
+        $max = $row["max"];
+    }
+}
+$result = ($ilosc >=$max ) ? true : false;
+if($result){
+  $aaa = true;
+}
+
+mysqli_close($conn);
 ?>
 <form action="wynik.php" method="post">
     <button type="submit">pokaż wyniki</button>
