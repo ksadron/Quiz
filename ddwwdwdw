@@ -1,0 +1,36 @@
+// cypress/integration/quiz_spec.js
+describe('Quiz Test Suite', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:3000/quiz'); // Zmodyfikuj URL na odpowiedni dla swojej aplikacji
+  });
+
+  it('Should display quiz header', () => {
+    cy.get('h1').contains('Witaj w quizie!').should('be.visible');
+  });
+
+  it('Should navigate to quiz page', () => {
+    cy.get('.button').click();
+    cy.url().should('include', '/quiz.php');
+  });
+
+  it('Should have questions and answers', () => {
+    cy.get('.card').should('have.length', 9); // Zmodyfikuj na odpowiednią ilość pytań
+    cy.get('.card').first().within(() => {
+      cy.get('h2').should('have.text', 'Co oznacza skrót CSS?');
+      cy.get('button').should('have.length', 4);
+      cy.get('button').first().should('have.text', 'Cascading Style Sheets');
+    });
+  });
+
+  it('Should submit answer', () => {
+    cy.get('.card').first().within(() => {
+      cy.get('button').first().click();
+    });
+    cy.get('.message').contains('Poprawna odpowiedź!').should('be.visible');
+  });
+
+  it('Should navigate to result page', () => {
+    cy.get('form').submit();
+    cy.url().should('include', '/wynik.php');
+  });
+});
