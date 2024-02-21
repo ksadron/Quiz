@@ -75,19 +75,21 @@
     $selected_option = $_POST['selected_option'];
     $correct_answer = $_POST['correct_answer'];
     $result_text = ($selected_option == $correct_answer) ? true : false;
-     
+    $id_pytania = $_POST['id_pytania'];
     if ($result_text) {
         $sql ="UPDATE `zdobytepunkty` SET `punkty` = `punkty` + 1;";
         mysqli_query($conn, $sql);
         $sql =" UPDATE `klikniecia` SET `ilosc`=`ilosc`+1 WHERE 1;";
 
         mysqli_query($conn, $sql);
-    } else{
-        $sql =" UPDATE `klikniecia` SET `ilosc`=`ilosc`+1 WHERE 1;";
-
-        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM pytania WHERE id = $id_pytania";
+       mysqli_query($conn, $sql);
     }
-
+     else{
+        $sql = "DELETE FROM pytania WHERE id = $id_pytania";
+       mysqli_query($conn, $sql);
+    }
+   
 }
 
 $sql = "SELECT * FROM pytania;";
@@ -102,6 +104,7 @@ if (mysqli_num_rows($result) > 0) {
             <h2><?php echo $row["pytanie"]; ?></h2>
             <form action='' method='post'>
                 <input type='hidden' name='correct_answer' value='<?php echo $row["dobraodpowiedz"]; ?>'>
+                <input type='hidden' name='id_pytania' value='<?php echo $row["id"]; ?>'>
                 <button type='submit' name='selected_option' value='1'><?php echo $row["odpowiedz1"]; ?></button>
                 <button type='submit' name='selected_option' value='2'><?php echo $row["odpowiedz2"]; ?></button>
                 <button type='submit' name='selected_option' value='3'><?php echo $row["odpowiedz3"]; ?></button>
