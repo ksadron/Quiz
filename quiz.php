@@ -39,15 +39,15 @@
   }
     </style>
 </head>
-<body>
+<body onload="startCountdown()">
 <h1>Witaj na quizie!</h1>
-<div id="clock" onclick="startCountdown()">
-        Kliknij, aby rozpocząć odliczanie do 1 minuty
+<div id="clock">
+        
     </div>
 
     <script>
          function startCountdown() {
-            var timeLeft = 10;
+            var timeLeft = 6000;
             var clockDiv = document.getElementById('clock');
             clockDiv.innerHTML = "Pozostały czas: " + timeLeft + " sekund";
 
